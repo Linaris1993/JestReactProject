@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import UserForm from './UserForm';
-import { useReducer } from 'react';
+import { specialCharMap } from '@testing-library/user-event/dist/keyboard';
 
 test('it shoes two inputs and a button', () => {
     // render the component
@@ -57,4 +57,21 @@ user.click(button);
 //assertion to make sure 'onUserAdd' gets called with email/name
 expect(mock).toHaveBeenCalled();
 expect(mock).toHaveBeenCalledWith({ name: 'jane', email: 'jane@jane.com' });
-})
+});
+
+test('empties the two inputs when form is submitted', () => {
+render(<UserForm onUserAdd={() => {}} />);
+
+const nameInput = screen.getByRole('textbox', { name: /name/i });
+const emailInput = screen.getByRole('textbox', { name: /email/i });
+const button  = screen.getByRole('button');
+user.click(nameInput);
+user.keyboard('jane');
+user.click(emailInput);
+user.keyboard('jane@jane.com');
+user.click(button);
+
+expect(nameInput).toHaveValue('');
+expect(emailInput).toHaveValue('');
+
+});

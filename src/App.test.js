@@ -7,7 +7,7 @@ render(<App />);
 
 const nameInput = screen.getByRole('textbox', {
   //i is for case insensitivity
-  name: /name/i 
+  name: /name/i
 });
 const emailInput = screen.getByRole('textbox', {
   name: /email/i
